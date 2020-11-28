@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const pihardware = require("./hardware.js");
 const path = require("path");
+const fs = require("fs");
 const port = 8080;
 
 
@@ -42,10 +43,30 @@ app.post("/send", function(req,res){
 
 app.get("/snap", function(req, res){
   
-  pihardware.getSnap(function(res){
-    console.log("result: ", res); 
-  });
-})
+  //pihardware.takeSnap.then(function(){
+	 
+    //console.log("result: "); 
+    //fs.readFile('./image.jpg', function (err, data) {
+    //if (err) throw err;
+    //   res.write(data);
+    //});
+    //res.write('<html><body><img src="data:image/jpeg;base64,')
+    //res.write(Buffer.from(data).toString('base64'));
+    //res.end()
+    
+  //});
+    pihardware.fgetSnap(function(fname){
+    	console.log("result: ", fname);
+        fs.readFile("./snaps/img" + fname  + ".jpg", function (err, data) {
+            if (err) throw err;
+            res.write(data);
+	    res.end();
+        });
+    //res.write('<html><body><img src="data:image/jpeg;base64,')
+    //res.write(Buffer.from(data).toString('base64'));
+    //res.end()
+    });
+});
 
 
 app.listen(port, () => {

@@ -2,7 +2,7 @@ const PiCamera = require('pi-camera');
 const { StillCamera } = require("pi-camera-connect");
 const stillCamera = new StillCamera();
 const fs = require('fs');
-
+var img_num = 0;
 
 const myCamera = new PiCamera({
   mode: 'photo',
@@ -13,15 +13,26 @@ const myCamera = new PiCamera({
 });
 
 
-function takeSnap(callbck){
+var takeSnap = stillCamera.takeImage().then(image => {
 
-    stillCamera.takeImage().then(image => {
+        fs.writeFileSync("./snaps/img" + ".jpg", image);
+	//callback("result");
+        img_num = img_num+1; 
+   });
 
-        fs.writeFileSync("still-image.jpg", image);
-	callback("result");
-    });
+function fgetSnap(callback){
+
+        stillCamera.takeImage().then(image => {
+		
+		console.log("saving image : " + "./snaps/img" + img_num.toString() + ".jpg");
+        	fs.writeFileSync("./snaps/img" + img_num.toString() + ".jpg", image);
+		//callback("result");
+		callback(img_num);
+        	img_num = img_num+1;
+   	});
 }
 
 
+exports.takeSnap = takeSnap;
+module.exports.fgetSnap=fgetSnap;
 
-module.exports.takeSnap = takeSnap;
