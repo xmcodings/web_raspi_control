@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+
+
+<body>
+
+
+<h1>Arduino Controller</h1>
+
+<p> </p>
+<p> </p>
+<p> made by jinwon</p>
+
+<form action="/send", method="POST">
+  <label for="number">one digit</label>
+  <input type="number" id="digit" name="digit"><br><br>
+  <label for="letters">Letters(<16)</label>
+  <input type="text" id="letter" name="letter"><br><br>
+  <input type="submit" value="아두이노로 전송">
+</form>
+
+<p>아두이노의 화면과 7Seg를 확인하세요!".</p>
+
+
+<p>   </p>
+<p>   </p>
+<p>   </p>
+
+
+<form action="/capture", method="GET">
+  <input type="submit" value="카메라 사진찍기">
+</form>
+
+
+</body>
+</html>
+
