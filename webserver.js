@@ -38,7 +38,7 @@ app.post("/send", function(req,res){
     ardserial.sendArg(num.toString(), letter);
   }
 
-
+  res.redirect("/");
 });
 
 app.get("/snap", function(req, res){
