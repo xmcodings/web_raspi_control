@@ -22,23 +22,27 @@ app.post("/send", function(req,res){
 
   let num = req.body.digit;
   let letter = req.body.letter;
-
+  
+  console.log("num : ", num);
+  console.log("letter: ", letter);
+  res.set('Content-Type', 'text/html');
   // for exceptions
   if(num < 0 || num > 10){
-   // alert("number should be 0 ~ 9");
-   res.write("<p style=\"color:red\"> number sould be 0 ~ 9 </p>");
-   res.end();
+    // alert("number should be 0 ~ 9");
+    res.write("<p style=\"color:red\"> number sould be 0 ~ 9 </p>");
+    res.end();
   }
-  else if(letter.length > 16 || letter.length <= 0){ 
-   // alert("letter should be 1 ~ 16 chars");
-   res.write("<p style=\"color:red\"> letter should be 1 ~ 16 chars </p>");
-   res.end();
+  else if(letter.length > 16 || letter.length < 0){ 
+    // alert("letter should be 1 ~ 16 chars");
+    res.write("<p style=\"color:red\"> letter should be 1 ~ 16 chars </p>");
+    res.end();
   }
   else{
     ardserial.sendArg(num.toString(), letter);
+    res.redirect("/");
   }
 
-  res.redirect("/");
+  //res.redirect("/");
 });
 
 app.get("/snap", function(req, res){
