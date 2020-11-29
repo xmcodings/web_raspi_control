@@ -23,38 +23,27 @@ app.post("/send", function(req,res){
   let num = req.body.digit;
   let letter = req.body.letter;
 
+  res.set('Content-Type', 'text/html');
   // for exceptions
   if(num < 0 || num > 10){
-   // alert("number should be 0 ~ 9");
-   res.write("<p style=\"color:red\"> number sould be 0 ~ 9 </p>");
-   res.end();
+    // alert("number should be 0 ~ 9");
+    res.write("<p style=\"color:red\"> number sould be 0 ~ 9 </p>");
+    res.end();
   }
-  else if(letter.length > 16 || letter.length <= 0){ 
-   // alert("letter should be 1 ~ 16 chars");
-   res.write("<p style=\"color:red\"> letter should be 1 ~ 16 chars </p>");
-   res.end();
+  else if(letter.length > 16 || letter.length < 0){
+    // alert("letter should be 1 ~ 16 chars");
+    res.write("<p style=\"color:red\"> letter should be 1 ~ 16 chars </p>");
+    res.end();
   }
   else{
     ardserial.sendArg(num.toString(), letter);
+    res.redirect("/");
   }
 
-  res.redirect("/");
 });
 
 app.get("/snap", function(req, res){
   
-  //pihardware.takeSnap.then(function(){
-	 
-    //console.log("result: "); 
-    //fs.readFile('./image.jpg', function (err, data) {
-    //if (err) throw err;
-    //   res.write(data);
-    //});
-    //res.write('<html><body><img src="data:image/jpeg;base64,')
-    //res.write(Buffer.from(data).toString('base64'));
-    //res.end()
-    
-  //});
     pihardware.fgetSnap(function(fname){
     	console.log("result: ", fname);
         fs.readFile("./snaps/img" + fname  + ".jpg", function (err, data) {
@@ -62,9 +51,6 @@ app.get("/snap", function(req, res){
             res.write(data);
 	    res.end();
         });
-    //res.write('<html><body><img src="data:image/jpeg;base64,')
-    //res.write(Buffer.from(data).toString('base64'));
-    //res.end()
     });
 });
 
